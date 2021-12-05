@@ -11,7 +11,7 @@ import java.util.Map;
  *
  * @author zzx
  * @email 1176328868@qq.com
- * @date 2021-12-04 22:37:07
+ * @date 2021-12-05 17:30:48
  */
 public interface SpuInfoService extends IService<SpuInfoEntity> {
 

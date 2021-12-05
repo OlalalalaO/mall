@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 
  * @author zzx
  * @email 1176328868@qq.com
- * @date 2021-12-05 00:23:17
+ * @date 2021-12-05 17:26:59
  */
 @Mapper
 public interface HomeAdvDao extends BaseMapper<HomeAdvEntity> {

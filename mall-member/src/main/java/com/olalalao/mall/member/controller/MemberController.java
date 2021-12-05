@@ -3,6 +3,7 @@ package com.olalalao.mall.member.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.olalalao.mall.member.feign.CouponFeignService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +31,8 @@ import com.olalalao.common.utils.R;
 public class MemberController {
     @Autowired
     private MemberService memberService;
-
+    @Autowired
+    private CouponFeignService feignService;
     /**
      * 列表
      */
@@ -41,7 +43,10 @@ public class MemberController {
 
         return R.ok().put("page", page);
     }
-
+    @RequestMapping("/test")
+    public R test(){
+        return feignService.memberCoupons();
+    }
 
     /**
      * 信息
