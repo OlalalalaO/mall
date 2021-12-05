@@ -1,0 +1,7 @@
+# Project exclude paths
+/mall-common/target/
+/mall-coupon/target/
+/mall-member/target/
+/mall-order/target/
+/mall-product/target/
+/mall-ware/target/
