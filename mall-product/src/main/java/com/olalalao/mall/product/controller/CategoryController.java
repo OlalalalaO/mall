@@ -32,14 +32,12 @@ public class CategoryController {
     private CategoryService categoryService;
 
     /**
-     * 列表
+     * 查处所有的分类以及子分类
      */
-    @RequestMapping("/list")
+    @RequestMapping("/list/tree")
     @RequiresPermissions("product:category:list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = categoryService.queryPage(params);
-
-        return R.ok().put("page", page);
+        return null;
     }
 
 
