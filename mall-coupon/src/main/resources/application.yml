@@ -6,7 +6,7 @@ spring:
     url: jdbc:mysql://sh-cdb-dckrz0zs.sql.tencentcdb.com:58955/mall_sms
   cloud:
     nacos:
-      server-addr: localhost:8848
+      server-addr: 124.222.105.11:8848
     service-registry:
       auto-registration:
         enabled: true

@@ -1,8 +1,11 @@
 package com.olalalao.mall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+import com.olalalao.mall.product.service.impl.CategoryServiceImpl;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,15 +32,17 @@ import com.olalalao.common.utils.R;
 @RequestMapping("product/category")
 public class CategoryController {
     @Autowired
-    private CategoryService categoryService;
+    private CategoryServiceImpl service;
 
     /**
      * 查处所有的分类以及子分类
      */
     @RequestMapping("/list/tree")
-    @RequiresPermissions("product:category:list")
-    public R list(@RequestParam Map<String, Object> params){
-        return null;
+    public List<CategoryEntity> list(@RequestParam Map<String, Object> params){
+        List<CategoryEntity> parent = service.list();
+        List<CategoryEntity> highLevelCate = parent.stream().filter(it -> (it.getParentCid() == 0)).collect(Collectors.toList());
+        highLevelCate.forEach(it->service.getCategoryTree(it,parent));
+        return highLevelCate;
     }
 
 
@@ -45,9 +50,8 @@ public class CategoryController {
      * 信息
      */
     @RequestMapping("/info/{catId}")
-    @RequiresPermissions("product:category:info")
     public R info(@PathVariable("catId") Long catId){
-		CategoryEntity category = categoryService.getById(catId);
+		CategoryEntity category = service.getById(catId);
 
         return R.ok().put("category", category);
     }
@@ -56,9 +60,8 @@ public class CategoryController {
      * 保存
      */
     @RequestMapping("/save")
-    @RequiresPermissions("product:category:save")
     public R save(@RequestBody CategoryEntity category){
-		categoryService.save(category);
+		service.save(category);
 
         return R.ok();
     }
@@ -67,9 +70,8 @@ public class CategoryController {
      * 修改
      */
     @RequestMapping("/update")
-    @RequiresPermissions("product:category:update")
     public R update(@RequestBody CategoryEntity category){
-		categoryService.updateById(category);
+		service.updateById(category);
 
         return R.ok();
     }
@@ -78,11 +80,12 @@ public class CategoryController {
      * 删除
      */
     @RequestMapping("/delete")
-    @RequiresPermissions("product:category:delete")
     public R delete(@RequestBody Long[] catIds){
-		categoryService.removeByIds(Arrays.asList(catIds));
+		service.removeByIds(Arrays.asList(catIds));
 
         return R.ok();
     }
+
+
 
 }

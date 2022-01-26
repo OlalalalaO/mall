@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.olalalao.common.utils.PageUtils;
 import com.olalalao.mall.product.entity.CategoryEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,6 +15,7 @@ import java.util.Map;
  * @date 2021-12-05 17:30:47
  */
 public interface CategoryService extends IService<CategoryEntity> {
+
 
     PageUtils queryPage(Map<String, Object> params);
 }
