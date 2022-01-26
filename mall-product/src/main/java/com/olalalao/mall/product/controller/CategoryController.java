@@ -29,7 +29,7 @@ import com.olalalao.common.utils.R;
  * @date 2021-12-05 17:30:47
  */
 @RestController
-@RequestMapping("product/category")
+@RequestMapping("/product/category")
 public class CategoryController {
     @Autowired
     private CategoryServiceImpl service;
