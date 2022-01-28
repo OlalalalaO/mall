@@ -5,20 +5,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.olalalao.mall.product.service.impl.CategoryServiceImpl;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.olalalao.mall.product.entity.CategoryEntity;
 import com.olalalao.mall.product.service.CategoryService;
 import com.olalalao.common.utils.PageUtils;
 import com.olalalao.common.utils.R;
-
 
 
 /**
@@ -38,10 +36,10 @@ public class CategoryController {
      * 查处所有的分类以及子分类
      */
     @RequestMapping("/list/tree")
-    public List<CategoryEntity> list(@RequestParam Map<String, Object> params){
+    public List<CategoryEntity> list(@RequestParam Map<String, Object> params) {
         List<CategoryEntity> parent = service.list();
         List<CategoryEntity> highLevelCate = parent.stream().filter(it -> (it.getParentCid() == 0)).collect(Collectors.toList());
-        highLevelCate.forEach(it->service.getCategoryTree(it,parent));
+        highLevelCate.forEach(it -> service.getCategoryTree(it, parent));
         return highLevelCate;
     }
 
@@ -50,8 +48,8 @@ public class CategoryController {
      * 信息
      */
     @RequestMapping("/info/{catId}")
-    public R info(@PathVariable("catId") Long catId){
-		CategoryEntity category = service.getById(catId);
+    public R info(@PathVariable("catId") Long catId) {
+        CategoryEntity category = service.getById(catId);
 
         return R.ok().put("category", category);
     }
@@ -60,8 +58,8 @@ public class CategoryController {
      * 保存
      */
     @RequestMapping("/save")
-    public R save(@RequestBody CategoryEntity category){
-		service.save(category);
+    public R save(@RequestBody CategoryEntity category) {
+        service.save(category);
 
         return R.ok();
     }
@@ -70,8 +68,8 @@ public class CategoryController {
      * 修改
      */
     @RequestMapping("/update")
-    public R update(@RequestBody CategoryEntity category){
-		service.updateById(category);
+    public R update(@RequestBody CategoryEntity category) {
+        service.updateById(category);
 
         return R.ok();
     }
@@ -79,13 +77,13 @@ public class CategoryController {
     /**
      * 删除
      */
-    @RequestMapping("/delete")
-    public R delete(@RequestBody Long[] catIds){
-		service.removeByIds(Arrays.asList(catIds));
-
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public R delete(@RequestBody String catIds) {
+        List<Long> catIdArray = JSONArray.parseArray(catIds, Long.class);
+        //TODO
+        service.removeMenuByIds(catIdArray);
         return R.ok();
     }
-
 
 
 }

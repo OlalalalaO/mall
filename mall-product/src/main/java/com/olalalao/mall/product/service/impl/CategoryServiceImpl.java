@@ -34,8 +34,11 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         return new PageUtils(page);
     }
 
-    public List<CategoryEntity> findList() {
-        return service.list();
+
+    @Override
+    public void removeMenuByIds(List<Long> list) {
+        //TODO
+        baseMapper.deleteBatchIds(list);
     }
 
     public void getCategoryTree(CategoryEntity category, List<CategoryEntity> categoryList) {
