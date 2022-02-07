@@ -54,6 +54,15 @@ public class CategoryController {
         return R.ok().put("category", category);
     }
 
+    //update categories
+    @RequestMapping("/update/categories")
+    public R updateCategories(@RequestBody String body) {
+        JSONObject jsonObject = JSON.parseObject(body);
+        JSONArray jsonArray = jsonObject.getJSONArray("categories");
+        List<CategoryEntity> categories = JSON.parseArray(jsonArray.toJSONString(), CategoryEntity.class);
+        service.updateBatchById(categories);
+        return R.ok();
+    }
     /**
      * 保存
      */
@@ -61,7 +70,7 @@ public class CategoryController {
     public R save(@RequestBody CategoryEntity category) {
         service.save(category);
 
-        return R.ok();
+        return R.ok().put("category", category);
     }
 
     /**
@@ -71,7 +80,7 @@ public class CategoryController {
     public R update(@RequestBody CategoryEntity category) {
         service.updateById(category);
 
-        return R.ok();
+        return R.ok().put("category", category);
     }
 
     /**
